@@ -1,0 +1,23 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+.box{
+  border: 1px solid lightgray;
+  background: white;
+}
+
+.page-header{
+  text-align: center;
+}
+
+.company-red{
+  background: #00A8A8;
+  color: #ffffff;
+}
