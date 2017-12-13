@@ -46,15 +46,48 @@ class VoteController extends Controller
         return $this->response('success', $return);
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function show(Request $request)
     {
 
-        $votes = Vote::where('employee_id',$request->employee_id)->with('restaurant')->get();
+        $votes = Vote::where('employee_id', $request->employee_id)->with('restaurant')->get();
 
+        foreach ($votes as $vote) {
+            $return[$vote->id]['restaurant'] = $vote->restaurant->name;
+            $return[$vote->id]['created_at'] = $vote->created_at->format('d M Y - H:i:s');
+        }
 
         return $this->response('success', $return);
     }
-    
+
+    public function store(Request $request)
+    {
+        $employee_id = $request->employee_id;
+        $restaurant_id = $request->restaurant_id;
+
+        $vote = Vote::where([
+            'date' => Carbon::parse('next monday')->toDateString(),
+            'employee_id',
+            $employee_id
+        ])->first();
+
+        if ($vote) {
+            $vote->restaurant_id = $restaurant_id;
+            $vote->save();
+        } else {
+            $vote = new Vote();
+            $vote->employee_id = $employee_id;
+            $vote->restaurant_id = $restaurant_id;
+            $vote->date = Carbon::parse('next monday')->toDateString();
+            $vote->save();
+        }
+
+        return $this->response('success', $vote);
+    }
+
     /**
      * @return bool
      */
