@@ -11,4 +11,8 @@ class Restaurant extends Model
 
     protected $casts = ['has_vegetarian', 'has_spicy'];
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }

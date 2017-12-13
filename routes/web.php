@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'VoteController@show');
+Route::get('/', 'VoteController@dashboard');

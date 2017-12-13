@@ -137,7 +137,7 @@ class VoteController extends Controller
     public function getRestaurants()
     {
         return $restaurants = Restaurant::where('date_last_used', '!=',
-            Carbon::parse('last monday')->toDateString())->get()->sortBy('date_last_used')->take(3);
+            Carbon::parse('last monday')->toDateString())->with('votes')->get()->sortBy('date_last_used')->take(3);
     }
 
     public function response($status, array $data = null)
